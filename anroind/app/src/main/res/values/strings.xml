@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Android Store</string>
+    <string name="label">Email</string>
+    <string name="labelPassword">Password</string>
+    <string name="labelPhone">Phone</string>
+    <string name="labelName">Name</string>
+    <string name="labelSurname">Surname</string>
+    <string name="labelMiddleName">Middle Name</string>
+</resources>
