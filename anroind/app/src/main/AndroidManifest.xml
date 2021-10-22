@@ -15,6 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidStore">
         <activity
+            android:name=".ProductAddActivity"
+            android:exported="true" />
+        <activity
             android:name=".PhotoActivity"
             android:exported="true" />
         <activity

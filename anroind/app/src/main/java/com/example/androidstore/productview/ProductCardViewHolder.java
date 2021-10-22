@@ -1,6 +1,7 @@
 package com.example.androidstore.productview;
 
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,7 +13,7 @@ import com.example.androidstore.R;
 public class ProductCardViewHolder extends RecyclerView.ViewHolder {
 
     private View view;
-    public NetworkImageView prodImage;
+    public ImageView prodImage;
     public TextView prodName;
     public TextView prodPrice;
     public TextView prodDescription;

@@ -10,34 +10,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="100dp"
         android:paddingStart="24dp"
         android:paddingEnd="24dp"
         android:layout_gravity="center_vertical">
-
-        <Button
-            android:id="@+id/btnGoToProducts"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="OnClickProductsActivity"
-            android:text="Go to Prods"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/btnGoToPhotos"
-            />
-
-        <Button
-            android:id="@+id/btnGoToPhotos"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="OnClickPhotoActivity"
-            android:text="Go to Photos"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnGoToProducts"
-            app:layout_constraintBottom_toTopOf="@+id/tvRegistration"
-            />
 
         <TextView
             android:id="@+id/tvRegistration"
@@ -47,7 +22,8 @@
             android:paddingBottom="20dp"
             android:text="Registration"
             android:textSize="25dp"
-            app:layout_constraintTop_toBottomOf="@+id/btnGoToPhotos" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/tiEmail" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tiEmail"
@@ -79,65 +55,65 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_marginTop="20dp"
-            android:id="@+id/tiPhone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/labelPhone"
-            app:layout_constraintTop_toBottomOf="@+id/tiPassword">
+<!--        <com.google.android.material.textfield.TextInputLayout-->
+<!--            android:layout_marginTop="20dp"-->
+<!--            android:id="@+id/tiPhone"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:hint="@string/labelPhone"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/tiPassword">-->
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edPhone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+<!--            <com.google.android.material.textfield.TextInputEditText-->
+<!--                android:id="@+id/edPhone"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content" />-->
 
-        </com.google.android.material.textfield.TextInputLayout>
+<!--        </com.google.android.material.textfield.TextInputLayout>-->
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_marginTop="20dp"
-            android:id="@+id/tiName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/labelName"
-            app:layout_constraintTop_toBottomOf="@+id/tiPhone">
+<!--        <com.google.android.material.textfield.TextInputLayout-->
+<!--            android:layout_marginTop="20dp"-->
+<!--            android:id="@+id/tiName"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:hint="@string/labelName"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/tiPhone">-->
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+<!--            <com.google.android.material.textfield.TextInputEditText-->
+<!--                android:id="@+id/edName"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content" />-->
 
-        </com.google.android.material.textfield.TextInputLayout>
+<!--        </com.google.android.material.textfield.TextInputLayout>-->
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_marginTop="20dp"
-            android:id="@+id/tiSurname"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/labelSurname"
-            app:layout_constraintTop_toBottomOf="@+id/tiName">
+<!--        <com.google.android.material.textfield.TextInputLayout-->
+<!--            android:layout_marginTop="20dp"-->
+<!--            android:id="@+id/tiSurname"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:hint="@string/labelSurname"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/tiName">-->
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edSurname"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+<!--            <com.google.android.material.textfield.TextInputEditText-->
+<!--                android:id="@+id/edSurname"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content" />-->
 
-        </com.google.android.material.textfield.TextInputLayout>
+<!--        </com.google.android.material.textfield.TextInputLayout>-->
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_marginTop="20dp"
-            android:id="@+id/tiMiddleName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/labelMiddleName"
-            app:layout_constraintTop_toBottomOf="@+id/tiSurname">
+<!--        <com.google.android.material.textfield.TextInputLayout-->
+<!--            android:layout_marginTop="20dp"-->
+<!--            android:id="@+id/tiMiddleName"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:hint="@string/labelMiddleName"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/tiSurname">-->
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edMiddleName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+<!--            <com.google.android.material.textfield.TextInputEditText-->
+<!--                android:id="@+id/edMiddleName"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content" />-->
 
-        </com.google.android.material.textfield.TextInputLayout>
+<!--        </com.google.android.material.textfield.TextInputLayout>-->
 
         <Button
             android:id="@+id/btnRegister"
@@ -148,7 +124,7 @@
             android:text="Register"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tiMiddleName"
+            app:layout_constraintTop_toBottomOf="@id/tiPassword"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

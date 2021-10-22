@@ -2,11 +2,17 @@ package com.example.androidstore;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
+import com.bumptech.glide.Glide;
 import com.example.androidstore.constans.Urls;
 import com.example.androidstore.dto.ProductDTO;
 import com.example.androidstore.dto.ProductImageDTO;
@@ -23,8 +29,10 @@ public class MainActivity extends AppCompatActivity {
 
 
     private TextView txtinfo;
+    private ImageView imageView;
     private ImageRequester imageRequester;
     private NetworkImageView myImage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +43,12 @@ public class MainActivity extends AppCompatActivity {
         myImage = findViewById(R.id.myimg);
         imageRequester.setImageFromUrl(myImage, url);
 
-        txtinfo=findViewById(R.id.txtinfo);
+        imageView = findViewById(R.id.imageView);
+        Glide.with(this)
+                .load(url)
+                .into(imageView);
+
+        txtinfo = findViewById(R.id.txtinfo);
 
 //        ProductService.getInstance()
 //                .getProductsApi()
@@ -57,16 +70,16 @@ public class MainActivity extends AppCompatActivity {
 //                    }
 //                });
 
-                ProductService.getInstance()
+        ProductService.getInstance()
                 .getProductsApi()
                 .getPostWithID(1)
                 .enqueue(new Callback<List<ProductImageDTO>>() {
                     @Override
                     public void onResponse(Call<List<ProductImageDTO>> call, Response<List<ProductImageDTO>> response) {
                         List<ProductImageDTO> list = response.body();
-                        String str="";
+                        String str = "";
                         for (ProductImageDTO item : list) {
-                            str+=item.getPath()+"\n";
+                            str += item.getPath() + "\n";
                         }
                         txtinfo.setText(str);
                     }
@@ -78,6 +91,41 @@ public class MainActivity extends AppCompatActivity {
                 });
 
 
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.home_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent;
+        switch (item.getItemId()) {
+            case R.id.mhome:
+                intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.mregister:
+                intent = new Intent(this, RegisterActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.mproducts:
+                intent = new Intent(this, ProductActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.mproductadd:
+                intent = new Intent(this, ProductAddActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.mphotos:
+                intent = new Intent(this, PhotoActivity.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

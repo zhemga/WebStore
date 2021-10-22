@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -20,6 +21,8 @@ namespace Web.Store.Controllers
         {
             _context = context;
         }
+
+        [Authorize(Roles = "user")]
         [HttpGet("all")]
         public async Task<IActionResult> GetAll()
         {
@@ -54,8 +57,18 @@ namespace Web.Store.Controllers
         [HttpGet("allImages")]
         public async Task<IActionResult> GetAllImages()
         {
-            List<string> list = Directory.GetFiles(Directory.GetCurrentDirectory() + "\\images").ToList();
+            var list = Directory.GetFiles(Directory.GetCurrentDirectory() + "\\images").ToList();
             list = list.Select(x => Path.GetFileName(x)).ToList();
+            return Ok(list);
+        }
+
+        [HttpGet("images/{id}")]
+        public async Task<IActionResult> GetImagesById(int id)
+        {
+            var list = await _context.ProductImages
+                .Where(x => x.ProductId == id)
+                .Select(x => x.Name)
+                .ToListAsync();
             return Ok(list);
         }
     }

@@ -6,4 +6,8 @@
     <string name="labelName">Name</string>
     <string name="labelSurname">Surname</string>
     <string name="labelMiddleName">Middle Name</string>
+    <string name="price">Price</string>
+    <string name="name">Name</string>
+    <string name="product_id">Product Id</string>
+    <string name="find_photos">Find photos</string>
 </resources>

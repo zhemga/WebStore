@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.example.androidstore.application.HomeApplication;
 import com.example.androidstore.constans.Urls;
 import com.example.androidstore.dto.ProductDTO;
 import com.example.androidstore.network.ImageRequester;
@@ -19,11 +22,11 @@ import java.util.List;
 public class ProductAdapter extends RecyclerView.Adapter<ProductCardViewHolder> {
 
     private List<ProductDTO> modelList;
-    private ImageRequester imageRequester;
+    //private ImageRequester imageRequester;
 
     public ProductAdapter(List<ProductDTO> modelList) {
         this.modelList = modelList;
-        imageRequester = ImageRequester.getInstance();
+        //imageRequester = ImageRequester.getInstance();
     }
 
     @NonNull
@@ -42,7 +45,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductCardViewHolder> 
             holder.prodPrice.setText(String.valueOf(model.getPrice()));
             int i = (int) (new Date().getTime()/1000);
             String url = Urls.BASE + "/images/" + model.getImage() + "?=data" + i;
-            imageRequester.setImageFromUrl(holder.prodImage, url);
+            Glide.with(HomeApplication.getAppContext())
+                    .load(url)
+                    .circleCrop()
+                    .apply(new RequestOptions().override(300, 300))
+                    .into(holder.prodImage);
+            //imageRequester.setImageFromUrl(holder.prodImage, url);
         }
     }
 
