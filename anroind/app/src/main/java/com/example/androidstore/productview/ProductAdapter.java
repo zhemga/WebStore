@@ -56,6 +56,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductCardViewHolder> 
 
     @Override
     public int getItemCount() {
-        return modelList.size();
+        return modelList != null ? modelList.size() : 0;
     }
 }

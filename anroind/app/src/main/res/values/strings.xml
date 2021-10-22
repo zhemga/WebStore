@@ -10,4 +10,5 @@
     <string name="name">Name</string>
     <string name="product_id">Product Id</string>
     <string name="find_photos">Find photos</string>
+    <string name="selected_photo">Обране фото:</string>
 </resources>

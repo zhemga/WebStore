@@ -7,6 +7,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
@@ -35,14 +36,13 @@ public class ProductAddActivity extends AppCompatActivity {
 
     private static int RESULT_LOAD_IMAGE = 1;
     ProductAddActivity activity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_add);
-        activity=this;
+        activity = this;
     }
-
-
 
 
     // You can do the assignment inside onAttach or onCreate, i.e, before the activity is displayed
@@ -76,51 +76,76 @@ public class ProductAddActivity extends AppCompatActivity {
     }
 
 
-
     public void AddProduct(View view) {
-        final TextInputEditText name = findViewById(R.id.textInputName);
-        final TextInputEditText price = findViewById(R.id.textInputPrice);
+        final TextInputEditText textInputName = findViewById(R.id.textInputName);
+        final TextInputEditText textInputPrice = findViewById(R.id.textInputPrice);
 
-        ProductAddDTO model = new ProductAddDTO();
-        model.setName(name.getText().toString());
-        model.setPrice(Double.parseDouble(price.getText().toString()));
+        final TextInputLayout textFieldName = findViewById(R.id.textFieldName);
+        final TextInputLayout textFieldPrice = findViewById(R.id.textFieldPrice);
 
+        if (textInputName.getText().toString().isEmpty())
+            textFieldName.setError("Empty name");
+        else
+            textFieldName.setError(null);
 
-        CropView cropView = (CropView) findViewById(R.id.cropView);
-        Bitmap croppedBitmap = cropView.getOutput();
-        Matrix matrix = new Matrix();
+        if (textInputPrice.getText().toString().isEmpty())
+            textFieldPrice.setError("Empty price");
+        else
+            textFieldPrice.setError(null);
 
-        matrix.postRotate(cropView.getRotation());
-        Bitmap rotatedBitmap = Bitmap.createBitmap(croppedBitmap, 0, 0, croppedBitmap.getWidth(), croppedBitmap.getHeight(), matrix, true);
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        rotatedBitmap.compress(Bitmap.CompressFormat.PNG, 50, byteArrayOutputStream);
-        byte[] byteArray = byteArrayOutputStream.toByteArray();
-        String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+        if (textFieldName.getError() == null && textFieldPrice.getError() == null) {
 
+            ProductAddDTO model = new ProductAddDTO();
+            model.setName(textInputName.getText().toString());
+            model.setPrice(Double.parseDouble(textInputPrice.getText().toString()));
 
-        ProductService.getInstance()
-                .getProductsApi()
-                .add(model)
-                .enqueue(new Callback<Void>() {
-                    @Override
-                    public void onResponse(Call<Void> call, Response<Void> response) {
-                        Intent intent = new Intent(activity, ProductActivity.class);
-                        startActivity(intent);
-                    }
+            CropView cropView = (CropView) findViewById(R.id.cropView);
+            Bitmap croppedBitmap = cropView.getOutput();
 
-                    @Override
-                    public void onFailure(Call<Void> call, Throwable t) {
+            if(croppedBitmap != null) {
+                Matrix matrix = new Matrix();
 
-                    }
-                });
+                matrix.postRotate(cropView.getRotation());
+                Bitmap rotatedBitmap = Bitmap.createBitmap(croppedBitmap, 0, 0, croppedBitmap.getWidth(), croppedBitmap.getHeight(), matrix, true);
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                rotatedBitmap.compress(Bitmap.CompressFormat.PNG, 80, byteArrayOutputStream);
+                byte[] byteArray = byteArrayOutputStream.toByteArray();
+                String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
 
+                model.setImage(encoded);
+
+                ProductService.getInstance()
+                        .getProductsApi()
+                        .add(model)
+                        .enqueue(new Callback<Void>() {
+                            @Override
+                            public void onResponse(Call<Void> call, Response<Void> response) {
+                                Intent intent = new Intent(activity, ProductActivity.class);
+                                startActivity(intent);
+                            }
+
+                            @Override
+                            public void onFailure(Call<Void> call, Throwable t) {
+
+                            }
+                        });
+            }
+            else {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage("Choose an image.");
+                builder.setNeutralButton("Ok", null);
+
+                AlertDialog alertNoImage = builder.create();
+                alertNoImage.show();
+            }
+        }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.home_menu, menu);
-        return true;    
+        return true;
     }
 
     @Override

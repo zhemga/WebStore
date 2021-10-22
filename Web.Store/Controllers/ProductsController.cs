@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Web.Store.Data;
+using Web.Store.Data.Entities;
 using Web.Store.Models;
 
 namespace Web.Store.Controllers
@@ -22,7 +23,7 @@ namespace Web.Store.Controllers
             _context = context;
         }
 
-        [Authorize(Roles = "user")]
+        //[Authorize(Roles = "user")]
         [HttpGet("all")]
         public async Task<IActionResult> GetAll()
         {
@@ -70,6 +71,31 @@ namespace Web.Store.Controllers
                 .Select(x => x.Name)
                 .ToListAsync();
             return Ok(list);
+        }
+
+        [HttpPost("add")]
+        public async Task<IActionResult> Add(ProductItemVM model)
+        {
+            await _context.Products.AddAsync(new Product
+            {
+                Name = model.Name,
+                Price = model.Price,
+                ProductImages = new List<ProductImage>{ 
+                    new ProductImage { Name = SaveImageBase64(model.Image), Priority = 1 }
+                }
+            });
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+
+        protected string SaveImageBase64(string base64)
+        {
+            string fileName = string.Format(@"{0}.txt", Guid.NewGuid()) + ".bmp";
+            string filePath = Directory.GetCurrentDirectory() + "\\images\\" + fileName;
+
+            System.IO.File.WriteAllBytes(filePath, Convert.FromBase64String(base64));
+
+            return fileName;
         }
     }
 }
