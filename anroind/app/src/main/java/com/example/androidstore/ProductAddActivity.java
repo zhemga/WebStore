@@ -90,6 +90,8 @@ public class ProductAddActivity extends AppCompatActivity {
 
         if (textInputPrice.getText().toString().isEmpty())
             textFieldPrice.setError("Empty price");
+        else if (!isNumeric(textInputPrice.getText().toString()))
+            textFieldPrice.setError("Price must be a number.");
         else
             textFieldPrice.setError(null);
 
@@ -138,6 +140,15 @@ public class ProductAddActivity extends AppCompatActivity {
                 AlertDialog alertNoImage = builder.create();
                 alertNoImage.show();
             }
+        }
+    }
+
+    protected static boolean isNumeric(String str) {
+        try {
+            Double.parseDouble(str);
+            return true;
+        } catch(NumberFormatException e){
+            return false;
         }
     }
 
