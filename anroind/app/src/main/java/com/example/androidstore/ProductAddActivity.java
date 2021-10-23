@@ -96,16 +96,15 @@ public class ProductAddActivity extends AppCompatActivity {
             textFieldPrice.setError(null);
 
         if (textFieldName.getError() == null && textFieldPrice.getError() == null) {
-
-            ProductAddDTO model = new ProductAddDTO();
-            model.setName(textInputName.getText().toString());
-            model.setPrice(Double.parseDouble(textInputPrice.getText().toString()));
-
             CropView cropView = (CropView) findViewById(R.id.cropView);
             Bitmap croppedBitmap = cropView.getOutput();
 
-            if(croppedBitmap != null) {
+            if (croppedBitmap != null) {
+                ProductAddDTO model = new ProductAddDTO();
                 Matrix matrix = new Matrix();
+
+                model.setName(textInputName.getText().toString());
+                model.setPrice(Double.parseDouble(textInputPrice.getText().toString()));
 
                 matrix.postRotate(cropView.getRotation());
                 Bitmap rotatedBitmap = Bitmap.createBitmap(croppedBitmap, 0, 0, croppedBitmap.getWidth(), croppedBitmap.getHeight(), matrix, true);
@@ -131,8 +130,7 @@ public class ProductAddActivity extends AppCompatActivity {
 
                             }
                         });
-            }
-            else {
+            } else {
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setMessage("Choose an image.");
                 builder.setNeutralButton("Ok", null);
@@ -147,7 +145,7 @@ public class ProductAddActivity extends AppCompatActivity {
         try {
             Double.parseDouble(str);
             return true;
-        } catch(NumberFormatException e){
+        } catch (NumberFormatException e) {
             return false;
         }
     }

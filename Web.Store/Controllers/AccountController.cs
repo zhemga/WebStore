@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.IO;
 using System.Threading.Tasks;
 using Web.Store.Data.Entities.Identity;
 using Web.Store.Models;
@@ -27,7 +29,12 @@ namespace Web.Store.Controllers
             var user = new AppUser
             {
                 Email = model.Email,
-                UserName = model.Email
+                UserName = model.Email,
+                Name = model.Name,
+                Surname = model.Surname,
+                MiddleName = model.MiddleName,
+                PhoneNumber = model.Phone,
+                Image = SaveImageBase64(model.Image)
             };
             var result = await _userManager.CreateAsync(user, model.Password);
 
@@ -40,6 +47,16 @@ namespace Web.Store.Controllers
             {
                 token = _jwtTokenService.CreateToken(user)
             });
+        }
+
+        protected string SaveImageBase64(string base64)
+        {
+            string fileName = string.Format(@"{0}.txt", Guid.NewGuid()) + ".bmp";
+            string filePath = Directory.GetCurrentDirectory() + "\\images\\" + fileName;
+
+            System.IO.File.WriteAllBytes(filePath, Convert.FromBase64String(base64));
+
+            return fileName;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using FluentValidation.Validators;
 using Microsoft.AspNetCore.Identity;
 using Web.Store.Data.Entities.Identity;
 using Web.Store.Models;
@@ -25,6 +26,15 @@ public class ValidatorRegisterViewModel : AbstractValidator<RegisterViewModel>
         //RuleFor(x => x.ConfirmPassword)
         // .NotEmpty().WithName("ConfirmPassword").WithMessage("Confirm your Password")
         // .Equal(x => x.Password).WithMessage("Password Confirmation do not match");
+        RuleFor(x => x.Name)
+          .NotEmpty().WithMessage("Name is required!");
+        RuleFor(x => x.Surname)
+          .NotEmpty().WithMessage("Surname is required!");
+        RuleFor(x => x.MiddleName)
+          .NotEmpty().WithMessage("MiddleName is required!");
+        RuleFor(x => x.Phone)
+          .NotEmpty().WithMessage("Phone is required")
+          .Matches(@"^((?:[0-9]\-?){6,14}[0-9])|((?:[0-9]\x20?){6,14}[0-9])$").WithMessage("It should be a phone.");
     }
 
     private bool BeUniqueEmail(string email)
