@@ -14,23 +14,20 @@ import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Base64;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
+import com.example.androidstore.application.HomeApplication;
 import com.example.androidstore.dto.RegisterDTO;
-import com.example.androidstore.dto.RegisterResultDTO;
+import com.example.androidstore.dto.AuthResultDTO;
 import com.example.androidstore.network.services.AccountService;
 import com.example.androidstore.utils.CommonUtils;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 import com.oginotihiro.cropview.CropView;
-
-import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 
@@ -98,6 +95,10 @@ public class RegisterActivity extends AppCompatActivity {
                 return true;
             case R.id.mregister:
                 intent = new Intent(this, RegisterActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.mlogin:
+                intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
                 return true;
             case R.id.mproducts:
@@ -192,38 +193,39 @@ public class RegisterActivity extends AppCompatActivity {
                 AccountService.getInstance()
                         .getJSONApi()
                         .Registration(registerDTO)
-                        .enqueue(new Callback<RegisterResultDTO>() {
+                        .enqueue(new Callback<AuthResultDTO>() {
                             @SneakyThrows
                             @Override
-                            public void onResponse(Call<RegisterResultDTO> call, Response<RegisterResultDTO> response) {
+                            public void onResponse(Call<AuthResultDTO> call, Response<AuthResultDTO> response) {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(activity);
                                 if (response.isSuccessful()) {
-                                    builder.setMessage(response.body().getToken());
+                                    HomeApplication.getInstance().saveJwtToken(response.body().getToken());
+                                    Intent intent = new Intent(activity, ProductActivity.class);
+                                    startActivity(intent);
                                 } else {
                                     Gson gson = new Gson();
-                                    RegisterErrorMessage message = gson.fromJson(response.errorBody().charStream(), RegisterErrorMessage.class);
+                                    AuthErrorMessage message = gson.fromJson(response.errorBody().charStream(), AuthErrorMessage.class);
                                     String err = "";
                                     if (message.errors != null) {
                                         if (message.errors.getEmail() != null)
                                             for (String i : message.errors.getEmail()) {
                                                 err += i + " ";
-
                                             }
-                                        
+
                                         if (message.errors.getPhone() != null)
                                             for (String i : message.errors.getPhone()) {
                                                 err += i + " ";
                                             }
                                     }
                                     builder.setMessage(err);
+                                    builder.setNeutralButton("Ok", null);
+                                    AlertDialog alertRes = builder.create();
+                                    alertRes.show();
                                 }
-                                builder.setNeutralButton("Ok", null);
-                                AlertDialog alertRes = builder.create();
-                                alertRes.show();
                             }
 
                             @Override
-                            public void onFailure(Call<RegisterResultDTO> call, Throwable t) {
+                            public void onFailure(Call<AuthResultDTO> call, Throwable t) {
                                 CommonUtils.hideLoading();
                             }
                         });

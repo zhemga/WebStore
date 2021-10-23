@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Web.Store.Data.Entities.Identity;
@@ -14,12 +15,14 @@ namespace Web.Store.Controllers
     public class AccountController : ControllerBase
     {
         private readonly UserManager<AppUser> _userManager;
+        private readonly SignInManager<AppUser> _signInManager;
         private readonly IJwtTokenService _jwtTokenService;
 
-        public AccountController(UserManager<AppUser> userManager,
+        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager,
             IJwtTokenService jwtTokenService)
         {
             _userManager = userManager;
+            _signInManager = signInManager;
             _jwtTokenService = jwtTokenService;
         }
 
@@ -44,7 +47,24 @@ namespace Web.Store.Controllers
             {
                 return BadRequest(result.Errors);
             }
-            return Ok(new 
+            return Ok(new
+            {
+                token = _jwtTokenService.CreateToken(user)
+            });
+        }
+
+        [HttpPost]
+        [Route("login")]
+        public async Task<IActionResult> Login([FromBody] LoginViewModel model)
+        {
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, false);
+
+            if (!result.Succeeded)
+            {
+                return BadRequest(new { errors = new { Password = new string[] { "Wrong password!" } } });
+            }
+            return Ok(new
             {
                 token = _jwtTokenService.CreateToken(user)
             });

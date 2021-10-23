@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using FluentValidation.Validators;
 using Microsoft.AspNetCore.Identity;
 using Web.Store.Data.Entities.Identity;
 using Web.Store.Models;

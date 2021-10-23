@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.example.androidstore.application.HomeApplication;
 import com.example.androidstore.dto.ProductDTO;
 import com.example.androidstore.network.services.ProductService;
 import com.example.androidstore.productview.ProductAdapter;
@@ -40,7 +41,7 @@ public class ProductActivity extends AppCompatActivity {
         CommonUtils.showLoading(this);
         ProductService.getInstance()
                 .getProductsApi()
-                .all()
+                .all("Bearer " + HomeApplication.getInstance().getToken())
                 .enqueue(new Callback<List<ProductDTO>>() {
                     @Override
                     public void onResponse(Call<List<ProductDTO>> call, Response<List<ProductDTO>> response) {
@@ -75,6 +76,10 @@ public class ProductActivity extends AppCompatActivity {
                 return true;
             case R.id.mregister:
                 intent = new Intent(this, RegisterActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.mlogin:
+                intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
                 return true;
             case R.id.mproducts:

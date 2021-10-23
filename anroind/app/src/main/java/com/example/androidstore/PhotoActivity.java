@@ -67,6 +67,10 @@ public class PhotoActivity extends AppCompatActivity {
                 intent = new Intent(this, RegisterActivity.class);
                 startActivity(intent);
                 return true;
+            case R.id.mlogin:
+                intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
+                return true;
             case R.id.mproducts:
                 intent = new Intent(this, ProductActivity.class);
                 startActivity(intent);

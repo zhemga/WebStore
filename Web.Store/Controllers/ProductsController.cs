@@ -23,7 +23,7 @@ namespace Web.Store.Controllers
             _context = context;
         }
 
-        //[Authorize(Roles = "user")]
+        [Authorize(Roles = "user")]
         [HttpGet("all")]
         public async Task<IActionResult> GetAll()
         {

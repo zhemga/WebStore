@@ -6,6 +6,7 @@ import lombok.Data;
 
 @Data
 public class ErrorInstance {
-    List<String> Email;
-    List<String> Phone;
+    List<String> email;
+    List<String> phone;
+    List<String> password;
 }

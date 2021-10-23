@@ -9,12 +9,13 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public interface ProductApi {
     @GET("/api/products/all")
-    public Call<List<ProductDTO>> all();
+    public Call<List<ProductDTO>> all(@Header("Authorization") String authHeader);
 
     @GET("/api/products/allImages")
     public Call<List<String>> allImages();

@@ -4,6 +4,9 @@
     <item android:id="@+id/mregister"
         android:title="Реєстрація"
         app:showAsAction="never" />
+    <item android:id="@+id/mlogin"
+        android:title="Логін"
+        app:showAsAction="never" />
     <item android:id="@+id/mhome"
         android:title="Головна"
         app:showAsAction="never" />
