@@ -10,6 +10,7 @@ using Web.Store.Services;
 namespace Web.Store.Controllers
 {
     [Route("api/[controller]")]
+    [ApiController]
     public class AccountController : ControllerBase
     {
         private readonly UserManager<AppUser> _userManager;

@@ -200,9 +200,22 @@ public class RegisterActivity extends AppCompatActivity {
                                 if (response.isSuccessful()) {
                                     builder.setMessage(response.body().getToken());
                                 } else {
-                                    //Gson gson = new Gson();
-                                    //RegisterErrorMessage message = gson.fromJson(response.errorBody().charStream(), RegisterErrorMessage.class);
-                                    builder.setMessage(response.errorBody().string());
+                                    Gson gson = new Gson();
+                                    RegisterErrorMessage message = gson.fromJson(response.errorBody().charStream(), RegisterErrorMessage.class);
+                                    String err = "";
+                                    if (message.errors != null) {
+                                        if (message.errors.getEmail() != null)
+                                            for (String i : message.errors.getEmail()) {
+                                                err += i + " ";
+
+                                            }
+                                        
+                                        if (message.errors.getPhone() != null)
+                                            for (String i : message.errors.getPhone()) {
+                                                err += i + " ";
+                                            }
+                                    }
+                                    builder.setMessage(err);
                                 }
                                 builder.setNeutralButton("Ok", null);
                                 AlertDialog alertRes = builder.create();
