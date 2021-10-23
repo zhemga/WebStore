@@ -73,9 +73,8 @@ public class LoginActivity extends AppCompatActivity {
                                 Intent intent = new Intent(activity, ProductActivity.class);
                                 startActivity(intent);
                             } else {
-                                String str = response.errorBody().string();
                                 Gson gson = new Gson();
-                                AuthErrorMessage message = gson.fromJson(str, AuthErrorMessage.class);
+                                AuthErrorMessage message = gson.fromJson(response.errorBody().charStream(), AuthErrorMessage.class);
                                 String err = "";
                                 if (message.errors != null) {
                                     if (message.errors.getEmail() != null)

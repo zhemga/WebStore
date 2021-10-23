@@ -76,39 +76,27 @@
             app:layout_constraintStart_toEndOf="@+id/prodimg"
             app:layout_constraintTop_toBottomOf="@+id/prodprice" />
 
-        <!--        <LinearLayout-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:orientation="vertical"-->
-        <!--            android:padding="16dp">-->
+        <Button
+            android:id="@+id/btnEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/prodimg"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btnDelete"
+            android:layout_margin="5dp"
+            android:text="Edit"
+            />
 
-        <!--            &lt;!&ndash; Title, secondary and supporting text &ndash;&gt;-->
-
-
-
-
-        <!--        </LinearLayout>-->
-
-        <!--        &lt;!&ndash; Buttons &ndash;&gt;-->
-        <!--        <LinearLayout-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_margin="8dp"-->
-        <!--            android:orientation="horizontal">-->
-        <!--            <com.google.android.material.button.MaterialButton-->
-        <!--                android:layout_width="wrap_content"-->
-        <!--                android:layout_height="wrap_content"-->
-        <!--                android:layout_marginEnd="8dp"-->
-        <!--                android:text="Переглянути"-->
-        <!--                style="?attr/borderlessButtonStyle"-->
-        <!--                />-->
-        <!--            <com.google.android.material.button.MaterialButton-->
-        <!--                android:layout_width="wrap_content"-->
-        <!--                android:layout_height="wrap_content"-->
-        <!--                android:text="Купити"-->
-        <!--                style="?attr/borderlessButtonStyle"-->
-        <!--                />-->
-        <!--        </LinearLayout>-->
+        <Button
+            android:id="@+id/btnDelete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/prodimg"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="5dp"
+            android:text="Delete"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
