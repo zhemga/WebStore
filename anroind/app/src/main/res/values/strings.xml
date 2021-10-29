@@ -11,4 +11,5 @@
     <string name="product_id">Product Id</string>
     <string name="find_photos">Find photos</string>
     <string name="selected_photo">Обране фото:</string>
+    <string name="current_photo">Поточне фото:</string>
 </resources>

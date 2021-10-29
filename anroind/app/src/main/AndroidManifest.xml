@@ -17,6 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidStore">
         <activity
+            android:name=".ProductEditActivity"
+            android:exported="true" />
+        <activity
             android:name=".LoginActivity"
             android:exported="true" />
         <activity

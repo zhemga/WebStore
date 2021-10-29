@@ -88,6 +88,44 @@ namespace Web.Store.Controllers
             return Ok();
         }
 
+        [HttpPut("edit")]
+        public async Task<IActionResult> Edit(ProductItemVM model)
+        {
+            var prod = await _context.Products.Where(x => x.Id == model.Id).FirstOrDefaultAsync();
+
+            if (prod == null)
+            {
+                return BadRequest();
+            }
+
+            if (prod.Name != model.Name)
+                prod.Name = model.Name;
+            if (prod.Price != model.Price)
+                prod.Price = model.Price;
+            if (model.Image != null)
+                prod.ProductImages = new List<ProductImage>{
+                    new ProductImage { Name = SaveImageBase64(model.Image), Priority = 1 }
+                    };
+
+            _context.Products.Update(prod);
+
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+
+        [HttpDelete("delete/{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var prod = await _context.Products.Where(x => x.Id == id).FirstOrDefaultAsync();
+
+            if (prod == null)
+                return BadRequest();
+
+            _context.Products.Remove(prod);
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+
         protected string SaveImageBase64(string base64)
         {
             string fileName = string.Format(@"{0}.txt", Guid.NewGuid()) + ".bmp";

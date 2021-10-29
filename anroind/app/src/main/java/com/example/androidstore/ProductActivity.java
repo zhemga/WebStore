@@ -28,11 +28,13 @@ public class ProductActivity extends AppCompatActivity {
 
     private ProductAdapter adapter;
     private RecyclerView recyclerView;
+    private ProductActivity activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product);
+        activity = this;
         recyclerView = findViewById(R.id.rcv);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 1,
@@ -46,7 +48,7 @@ public class ProductActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<List<ProductDTO>> call, Response<List<ProductDTO>> response) {
                         List<ProductDTO> list = response.body();
-                        adapter = new ProductAdapter(list);
+                        adapter = new ProductAdapter(list, activity);
                         recyclerView.setAdapter(adapter);
                         CommonUtils.hideLoading();
                     }
@@ -98,4 +100,6 @@ public class ProductActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+
 }
